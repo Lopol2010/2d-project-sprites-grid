@@ -8,7 +8,7 @@ using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Scripting.APIUpdating;
 
-public class Svin : Entity
+public class SvinEntity : Entity
 {
 
     void Awake()
