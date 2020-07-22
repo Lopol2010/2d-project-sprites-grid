@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -35,17 +34,28 @@ public class Game : MonoBehaviour
             Spawn<Musor>(grid.RandomCell());
         }
         //Spawn<Musor>(grid.GetCell(0, 0));
-        //Spawn<Ded>(grid.GetCell(0, 1));
+        Spawn<BomjEntity>(grid.GetCell(0, 1));
         Spawn<Svin>(grid.GetCell(1, 0));
         Spawn<Svin>(grid.GetCell(1, 0));
 
         mainSlot.game = this;
         mainSlot.grid = grid;
+        mainSlot.SetRandomItem();
     }
 
     void Update()
     {
 
+    }
+
+    public Entity GetRandomEntity(EntityType type)
+    {
+        var entitiesOfType = entities.FindAll(e => e.type == type);
+        if (entitiesOfType != null && entitiesOfType.Count > 0)
+        {
+            return entitiesOfType[Random.Range(0, entitiesOfType.Count)];
+        }
+        return null;
     }
 
     public void DoStep()

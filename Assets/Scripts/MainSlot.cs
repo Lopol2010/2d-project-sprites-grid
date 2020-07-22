@@ -12,6 +12,7 @@ public class MainSlot : MonoBehaviour
 
     void Start()
     {
+
     }
 
     

@@ -63,18 +63,18 @@ public class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         int x = Mathf.RoundToInt(cursorPosInWorld.x);
         int y = Mathf.RoundToInt(cursorPosInWorld.y);
         Vector2 bindPos = Camera.main.WorldToScreenPoint(new Vector2(x, y));
-        //if (grid.Exists(x, y))
-        //{
-        //    rectTransform.localScale = defaultSize * sizeOverGrid;
-        //    rectTransform.anchoredPosition = bindPos - cursorStartDragPosition;
+        if (grid.Exists(x, y))
+        {
+            rectTransform.localScale = defaultSize * sizeOverGrid;
+            //rectTransform.anchoredPosition = bindPos - cursorStartDragPosition;
 
-        //}
-        //else
-        //{
-        //    rectTransform.localScale = defaultSize * sizeOverSlot;
-        //    rectTransform.anchoredPosition = eventData.position - cursorStartDragPosition;
+        }
+        else
+        {
+            rectTransform.localScale = defaultSize * sizeOverSlot;
+            //rectTransform.anchoredPosition = eventData.position - cursorStartDragPosition;
 
-        //}
+        }
         rectTransform.anchoredPosition = eventData.position - cursorStartDragPosition;
 
     }

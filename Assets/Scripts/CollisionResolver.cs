@@ -46,9 +46,9 @@ public static class CollisionResolver
     {
         public override void Execute(Entity a, Entity b)
         {
-            a.currentCell.Remove(a);
-            a.currentCell = b.currentCell;
-            a.currentCell.Push(a);
+            //a.currentCell.Remove(a);
+            //a.currentCell = b.currentCell;
+            //a.currentCell.Push(a);
 
             game.Despawn(b);
         }
@@ -99,7 +99,7 @@ public static class CollisionResolver
     public static void Init(Game _game)
     {
         game = _game;
-        AddRule(EntityType.ded, EntityType.musor, new EvolveResult(EntityType.svin));
+        AddRule(EntityType.bomj, EntityType.musor, new EvolveResult(EntityType.svin));
         AddRule(EntityType.svin, EntityType.musor, new EatResult());
     }
 

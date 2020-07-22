@@ -6,7 +6,7 @@ using UnityEngine;
 
 public enum EntityType
 {
-    ded,
+    bomj,
     musor,
     svin,
     banan,
@@ -80,16 +80,19 @@ public class Entity : MonoBehaviour
             if (moveDelta >= 1)
             {
 
-                SetPosition(nextCell);
+                SetPosition(currentCell);
+
+                if (target != null && position == target.position)
+                {
+                    target = null;
+                }
+
                 var collideWith = nextCell.GetBefore(this);
                 if (collideWith)
                 {
                     OnCollision(collideWith);
                 }
-                currentCell = nextCell;
 
-
-                target = null;
                 moveDelta = 0;
                 isMoving = false;
                 nextCell = null;
@@ -101,23 +104,17 @@ public class Entity : MonoBehaviour
             if (target != null && nextCell != null)
             {
 
-                if (nextCell.content.Count > 0)
-                {
-                    if (CollisionResolver.CanCollide(this, nextCell.GetLast()))
-                    {
-                        isMoving = true;
-                        moveFrom = currentCell.transform;
-                        currentCell.Remove(this);
-                        nextCell.Push(this);
-                    }
-                }
-                else
+
+                if (CollisionResolver.CanCollide(this, nextCell.GetLast()))
                 {
                     isMoving = true;
                     moveFrom = currentCell.transform;
                     currentCell.Remove(this);
                     nextCell.Push(this);
+
+                    currentCell = nextCell;
                 }
+
             }
         }
     }
@@ -129,7 +126,7 @@ public class Entity : MonoBehaviour
             Entity interestEntity = null;
             foreach (var interestEntry in interestList)
             {
-                var current = game.entities.Find(e => e.type == interestEntry);
+                var current = game.GetRandomEntity(interestEntry);
                 if (current != null)
                 {
                     interestEntity = current;
@@ -171,7 +168,7 @@ public class Entity : MonoBehaviour
 
     public virtual bool OnDetermineWalkableCell(Cell cell)
     {
-  
+
         return CollisionResolver.CanCollide(this, cell.GetBefore(this));
     }
 

@@ -31,6 +31,8 @@ public class Cell : MonoBehaviour
     private Image background;
     private Text debug;
 
+    public bool DebugContent;
+
     public List<Entity> content = new List<Entity>();
 
     void Awake()
@@ -80,7 +82,7 @@ public class Cell : MonoBehaviour
         content.Add(entity);
     }
 
-    public void Remove (Entity entity)
+    public void Remove(Entity entity)
     {
         content.Remove(entity);
     }
@@ -117,5 +119,26 @@ public class Cell : MonoBehaviour
     {
         game.Spawn(item.type, this);
         game.DoStep();
+    }
+
+    private void OnGUI()
+    {
+        if (DebugContent)
+        {
+            var cellPosOnScreen = Camera.main.WorldToScreenPoint(transform.position);
+
+            cellPosOnScreen.y = Screen.height - cellPosOnScreen.y;
+
+            GUILayout.BeginArea(new Rect(cellPosOnScreen.x, cellPosOnScreen.y, 100, 100));
+            GUILayout.Label($"{x} {y}");
+
+            foreach (var entity in content)
+            {
+
+                GUILayout.Label(entity.type.ToString());
+            }
+            GUILayout.EndArea();
+        }
+
     }
 }
