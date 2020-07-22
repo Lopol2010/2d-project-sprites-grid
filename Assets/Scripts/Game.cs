@@ -37,12 +37,12 @@ public class Game : MonoBehaviour
 
         for (int i = 0; i < musorCount; i++)
         {
-            Spawn<MusorEntity>(grid.RandomCell());
+            Spawn<Musor>(grid.RandomCell());
         }
         //Spawn<Musor>(grid.GetCell(0, 0));
         Spawn<BomjEntity>(grid.GetCell(0, 1));
-        Spawn<SvinEntity>(grid.GetCell(1, 0));
-        Spawn<SvinEntity>(grid.GetCell(1, 0));
+        Spawn<Svin>(grid.GetCell(1, 0));
+        Spawn<Svin>(grid.GetCell(1, 0));
 
         mainSlot.game = this;
         mainSlot.grid = grid;
@@ -100,7 +100,6 @@ public class Game : MonoBehaviour
             entity.Init(this, grid);
             entity.AttachTo(at);
             entity.SetPosition(at);
-            entity.OnSpawn();
             entities.Add(entity);
         }
         else

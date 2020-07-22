@@ -46,7 +46,6 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -91,16 +90,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 4951285892789345295}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14d3301dfc7b87e4cbc4b1e614dafbfe, type: 3}
+  m_Script: {fileID: 11500000, guid: ca00816f8d846c84db2d094ce8538d39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 3
+  type: 2
   position: {x: 0, y: 0}
   interestList: 
-  StepInterval: 0.25
-  showNeighbors: 1
-  showPath: 1
-  showDistances: 1
-  isMoving: 0
-  moveSpeed: 0
-  currentCell: {fileID: 0}
+  StepInterval: 0.1
+  showNeighbors: 0
+  showPath: 0
+  showDistances: 0
+  moveSpeed: 3

@@ -8,7 +8,6 @@ public enum EntityType
 {
     bomj,
     musor,
-    svalka,
     svin,
     banan,
     durak
@@ -32,6 +31,9 @@ public class Entity : MonoBehaviour
     protected float stepTime;
 
     public Dijkstra dijkstra;
+    public bool showNeighbors = true;
+    public bool showPath = true;
+    public bool showDistances = true;
 
 
     //private List<Node> path;
@@ -48,18 +50,6 @@ public class Entity : MonoBehaviour
     void Start()
     {
 
-    }
-
-    public void OnSpawn()
-    {
-        if (currentCell != null && !currentCell.IsEmpty)
-        {
-            var collideWith = currentCell.GetBefore(this);
-            if (collideWith != null && CollisionResolver.CanCollide(this, collideWith))
-            {
-                OnCollision(collideWith);
-            }
-        }
     }
 
 
@@ -184,7 +174,7 @@ public class Entity : MonoBehaviour
 
     public virtual void OnCollision(Entity collider)
     {
-        CollisionResolver.Resolve(this, collider);    
+        Debug.Log($"{type} is collided with {collider.type} at {position}");
     }
 
     //TODO: должнал и коллизия происходить здесь?

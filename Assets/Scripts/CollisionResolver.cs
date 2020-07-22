@@ -100,7 +100,6 @@ public static class CollisionResolver
     {
         game = _game;
         AddRule(EntityType.bomj, EntityType.musor, new EvolveResult(EntityType.svin));
-        AddRule(EntityType.musor, EntityType.musor, new EvolveResult(EntityType.svalka));
         AddRule(EntityType.svin, EntityType.musor, new EatResult());
     }
 

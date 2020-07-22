@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MusorEntity : Entity
+public class Musor : Entity
 {
     // Start is called before the first frame update
     void Awake()
