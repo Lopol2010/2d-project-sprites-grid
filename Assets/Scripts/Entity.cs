@@ -45,10 +45,7 @@ public class Entity : MonoBehaviour
 
     public Cell currentCell;
 
-    void Start()
-    {
 
-    }
 
     public void OnSpawn()
     {
@@ -61,6 +58,7 @@ public class Entity : MonoBehaviour
             }
         }
     }
+
 
 
     public void Init(Game game, Grid grid)
