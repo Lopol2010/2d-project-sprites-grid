@@ -14,7 +14,6 @@ public class BomjEntity : Entity
     void Awake()
     {
         // TODO: This might be removed. Then step() function refactored to use CanCollide instead of this 'list of interest'
-        type = EntityType.bomj;
         interestList = new List<EntityType>(){
             EntityType.musor
         };
