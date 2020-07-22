@@ -8,22 +8,28 @@ using UnityEngine;
 public class Game : MonoBehaviour
 {
 
-
-    public List<Entity> entityPrefabs = new List<Entity>();
-
-    public Grid grid;
-    public MainSlot mainSlot;
-    public List<Entity> entities = new List<Entity>();
-    public CameraManager cameraManager;
+    [SerializeField]
+    private List<Entity> entityPrefabs = new List<Entity>();
+    [SerializeField]
+    private List<Entity> entities = new List<Entity>();
+    [SerializeField]
+    private Grid grid;
+    [SerializeField]
+    private MainSlot mainSlot;
+    [SerializeField]
+    private CameraManager cameraManager;
+    [SerializeField]
+    private CanvasController canvasController;
 
     public int musorCount = 5;
-
+    public int stepCount = 0;
+    public int dayNightLength = 8;
 
     void Start()
     {
      
 
-        cameraManager = cameraManager ? cameraManager : Camera.main.GetComponent<CameraManager>();
+        //cameraManager = Camera.main.GetComponent<CameraManager>();
 
         grid.Generate();
         cameraManager.FitContent();
@@ -60,6 +66,10 @@ public class Game : MonoBehaviour
 
     public void DoStep()
     {
+
+        canvasController.TimeOfDay = stepCount % dayNightLength;
+        stepCount++;
+        
         if (entities.Exists(e => e.isMoving))
         {
             return;

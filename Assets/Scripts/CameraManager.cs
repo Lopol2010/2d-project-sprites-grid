@@ -12,7 +12,7 @@ public class CameraManager : MonoBehaviour
     void Awake()
     {
         game = FindObjectOfType<Game>();
-        grid = game.grid;
+        grid = FindObjectOfType<Grid>();
         cam = GetComponent<Camera>();
     }
 
