@@ -31,8 +31,6 @@ public class Cell : MonoBehaviour
     private Image background;
     private Text debug;
 
-    public bool DebugContent;
-
     public List<Entity> content = new List<Entity>();
 
     void Awake()
@@ -122,7 +120,7 @@ public class Cell : MonoBehaviour
 
     private void OnGUI()
     {
-        if (DebugContent)
+        if (game != null && game.DebugCellContent)
         {
             float padding = 0.2f;
             var cellWorldPos = transform.position;

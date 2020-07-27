@@ -8,6 +8,11 @@ using UnityEngine;
 public class Game : MonoBehaviour
 {
 
+
+    public bool DebugCellContent = false;
+    
+    [Space]
+
     [SerializeField]
     private List<Entity> entityPrefabs = new List<Entity>();
     [SerializeField]
@@ -26,7 +31,6 @@ public class Game : MonoBehaviour
 
     // TODO: move this to level data
     public int musorCount = 5;
-
 
     void Start()
     {

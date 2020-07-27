@@ -38,7 +38,6 @@ public class Entity : MonoBehaviour
     protected float moveSpeed = 4;
     protected float moveDelta;
     public bool isMoving;
-    public bool shouldMove;
     protected Entity target;
     protected Cell nextCell;
     protected Transform moveFrom;
@@ -108,7 +107,6 @@ public class Entity : MonoBehaviour
         {
             moveDelta = 0;
             isMoving = false;
-            shouldMove = false;
             SetPosition(currentCell);
 
             OnEndMoveTowards();
@@ -131,7 +129,6 @@ public class Entity : MonoBehaviour
 
         moveDelta = 0;
         nextCell = null;
-        shouldMove = false;
     }
 
     public virtual void Step()
@@ -174,8 +171,7 @@ public class Entity : MonoBehaviour
 
         dijkstra.UpdateNodes((node, _x, _y) =>
         {
-            node.walkable = OnDetermineWalkableCell(grid.GetCell(_x, _y));
-
+            node.walkable = CollisionResolver.CanCollide(this, grid.GetCell(_x, _y).GetLast());
             return true;
         });
 
@@ -187,18 +183,15 @@ public class Entity : MonoBehaviour
         return null;
     }
 
-    public virtual bool OnDetermineWalkableCell(Cell cell)
-    {
-
-        return CollisionResolver.CanCollide(this, cell.GetBefore(this));
-    }
-
     public virtual void OnCollision(Entity collider)
     {
         CollisionResolver.Resolve(this, collider);
     }
 
-    //TODO: должнал и коллизия происходить здесь?
+    /// <summary>
+    /// Attaches entity to cell.
+    /// </summary>
+    /// <param name="to">Cell to attach to.</param>
     public void AttachTo(Cell to)
     {
         if (to)
