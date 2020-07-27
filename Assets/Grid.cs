@@ -8,8 +8,10 @@ public class Grid : MonoBehaviour
     public int columns = 9;
     public int rows = 7;
 
-    public Cell cellPrefab;
-    public Cell[,] cells;
+    [SerializeField]
+    private Cell cellPrefab;
+    [SerializeField]
+    private Cell[,] cells;
 
 
     void Awake()
@@ -40,7 +42,7 @@ public class Grid : MonoBehaviour
 
         }
     }
-    public Cell RandomCell(bool empty = true)
+    public Cell GetRandomCell(bool empty = true)
     {
         if (empty)
         {

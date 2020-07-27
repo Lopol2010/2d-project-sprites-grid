@@ -4,47 +4,42 @@ using System.Linq;
 using UnityEngine;
 
 
-public enum EntityType
-{
-    bomj,
-    musor,
-    svalka,
-    svin,
-    banan,
-    durak
-}
-
 public class Entity : MonoBehaviour
 {
 
 
     protected Game game;
     protected Grid grid;
+    protected DijkstraGrid dijkstra;
+
+    public List<EntityType> preyList = new List<EntityType>();
+    public List<EntityType> predatorList = new List<EntityType>();
 
     public EntityType type;
+    public Cell currentCell;
     public Vector2Int position;
-    public int x { get => position.x; set => position = new Vector2Int(value, position.y); }
-    public int y { get => position.y; set => position = new Vector2Int(position.x, value); }
+    //{
+    //    get => currentCell.position;
+    //}
+    public int x 
+    {
+        get => position.x;
+        set => position = new Vector2Int(value, position.y); 
+    }
+    public int y 
+    { 
+        get => position.y; 
+        set => position = new Vector2Int(position.x, value); 
+    }
 
-    public List<EntityType> interestList = new List<EntityType>();
 
-    public float StepInterval = 0.25f;
-    protected float stepTime;
-
-    public Dijkstra dijkstra;
-
-
-    //private List<Node> path;
-    protected Entity target;
-    public bool isMoving;
-    protected float moveDelta;
     [SerializeField]
-    protected float moveSpeed;
+    protected float moveSpeed = 4;
+    protected float moveDelta;
+    public bool isMoving;
+    protected Entity target;
     protected Cell nextCell;
     protected Transform moveFrom;
-
-    public Cell currentCell;
-
 
 
     public void OnSpawn()
@@ -65,7 +60,7 @@ public class Entity : MonoBehaviour
     {
         this.game = game;
         this.grid = grid;
-        dijkstra = new Dijkstra(grid.columns, grid.rows);
+        dijkstra = new DijkstraGrid(grid.columns, grid.rows);
     }
 
     void Update()
@@ -78,9 +73,9 @@ public class Entity : MonoBehaviour
                 isMoving = false;
             }
 
-            Vector3 dir = (nextCell.transform.position - moveFrom.position);
-            Vector3 startOffset = dir * (moveDelta);
-            transform.position = moveFrom.position + startOffset;
+            Vector3 dir = (transform.position - nextCell.transform.position);
+            Vector3 endOffset = dir.normalized * (1 - moveDelta);
+            transform.position = nextCell.transform.position + endOffset;
 
             moveDelta += Time.deltaTime * moveSpeed;
             moveDelta = Mathf.Clamp(moveDelta, 0, 1);
@@ -104,7 +99,6 @@ public class Entity : MonoBehaviour
                 moveDelta = 0;
                 isMoving = false;
                 nextCell = null;
-                moveFrom = null;
             }
         }
         else
@@ -116,7 +110,6 @@ public class Entity : MonoBehaviour
                 if (CollisionResolver.CanCollide(this, nextCell.GetLast()))
                 {
                     isMoving = true;
-                    moveFrom = currentCell.transform;
                     currentCell.Remove(this);
                     nextCell.Push(this);
 
@@ -131,20 +124,11 @@ public class Entity : MonoBehaviour
     {
         if (target == null)
         {
-            Entity interestEntity = null;
-            foreach (var interestEntry in interestList)
-            {
-                var current = game.GetRandomEntity(interestEntry);
-                if (current != null)
-                {
-                    interestEntity = current;
-                    break;
-                }
-            }
+            Entity chaseTarget = FindChaseTarget();
 
-            if (interestEntity)
+            if (chaseTarget)
             {
-                target = interestEntity;
+                target = chaseTarget;
             }
             else
             {
@@ -153,10 +137,25 @@ public class Entity : MonoBehaviour
         }
 
         var targetCell = grid.GetCell(target.position);
-        nextCell = GetStepTowardCell(targetCell);
+        nextCell = GetStepToward(targetCell);
     }
 
-    public Cell GetStepTowardCell(Cell cell)
+    public Entity FindChaseTarget ()
+    {
+        Entity chaseTarget = null;
+        foreach (var interestEntry in preyList)
+        {
+            var current = game.GetRandomEntity(interestEntry);
+            if (current != null)
+            {
+                chaseTarget = current;
+                break;
+            }
+        }
+        return chaseTarget;
+    }
+
+    public Cell GetStepToward(Cell cell)
     {
 
         dijkstra.UpdateNodes((node, _x, _y) =>
@@ -182,7 +181,7 @@ public class Entity : MonoBehaviour
 
     public virtual void OnCollision(Entity collider)
     {
-        CollisionResolver.Resolve(this, collider);    
+        CollisionResolver.Resolve(this, collider);
     }
 
     //TODO: должнал и коллизия происходить здесь?

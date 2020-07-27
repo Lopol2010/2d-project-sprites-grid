@@ -47,6 +47,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -94,10 +95,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7af0526532a02e34bb50b4ea4364c5d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 2
-  position: {x: 0, y: 0}
-  interestList: 
-  StepInterval: 0.25
-  isMoving: 0
-  moveSpeed: 0
+  preyList: 
+  predatorList: 
+  type: 15
   currentCell: {fileID: 0}
+  position: {x: 0, y: 0}
+  moveSpeed: 1
+  isMoving: 0

@@ -99,9 +99,9 @@ public static class CollisionResolver
     public static void Init(Game _game)
     {
         game = _game;
-        AddRule(EntityType.bomj, EntityType.musor, new EvolveResult(EntityType.svin));
-        AddRule(EntityType.musor, EntityType.musor, new EvolveResult(EntityType.svalka));
-        AddRule(EntityType.svin, EntityType.musor, new EatResult());
+        //AddRule(EntityType.bomj, EntityType.musor, new EvolveResult(EntityType.svin));
+        //AddRule(EntityType.musor, EntityType.musor, new EvolveResult(EntityType.svalka));
+        //AddRule(EntityType.svin, EntityType.musor, new EatResult());
     }
 
     public static void AddRule(EntityType a, EntityType b, CollisionResult result)

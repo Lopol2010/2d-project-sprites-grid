@@ -21,9 +21,12 @@ public class Game : MonoBehaviour
     [SerializeField]
     private CanvasController canvasController;
 
-    public int musorCount = 5;
     public int stepCount = 0;
     public int dayNightLength = 8;
+
+    // TODO: move this to level data
+    public int musorCount = 5;
+
 
     void Start()
     {
@@ -37,12 +40,11 @@ public class Game : MonoBehaviour
 
         for (int i = 0; i < musorCount; i++)
         {
-            Spawn<MusorEntity>(grid.RandomCell());
+            Spawn<MusorkaEntity>(grid.GetRandomCell());
         }
         //Spawn<Musor>(grid.GetCell(0, 0));
-        Spawn<BomjEntity>(grid.GetCell(0, 1));
-        Spawn<SvinEntity>(grid.GetCell(1, 0));
-        Spawn<SvinEntity>(grid.GetCell(1, 0));
+        Spawn<BomzhEntity>(grid.GetRandomCell());
+        Spawn(EntityType.Dvornik, grid.GetRandomCell());
 
         mainSlot.game = this;
         mainSlot.grid = grid;

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6467483042865610141}
   - component: {fileID: 6761950998555648964}
   m_Layer: 0
-  m_Name: Ded
+  m_Name: Bomj
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 1
+  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &6761950998555648964
 MonoBehaviour:
@@ -94,13 +94,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c99999db70e38cc449687dbbc8beb60b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  preyList: 
+  predatorList: 
   type: 0
+  currentCell: {fileID: 0}
   position: {x: 0, y: 0}
-  interestList: 
-  StepInterval: 0.1
-  showNeighbors: 0
-  showPath: 1
-  showDistances: 0
   isMoving: 0
   moveSpeed: 4
-  currentCell: {fileID: 0}

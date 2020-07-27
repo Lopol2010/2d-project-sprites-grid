@@ -5,27 +5,34 @@ using System.IO;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class Dijkstra
+
+/// <summary>
+/// Dijkstra pathfinding algorythm optimized for grid-graphs
+/// </summary>
+public class DijkstraGrid
 {
 
     Node start;
     Node end;
     Node[,] nodes;
-    int columns { get => nodes.GetLength(0); }
-    int rows { get => nodes.GetLength(1); }
+    int columns;
+    int rows;
 
-    public Dijkstra(int _columns, int _rows)
+    public DijkstraGrid(int columns, int rows)
     {
-        nodes = new Node[_columns, _rows];
-        for (int x = 0; x < columns; x++)
+        this.columns = columns;
+        this.rows = rows;
+
+        nodes = new Node[columns, rows];
+
+        for (int x = 0; x < this.columns; x++)
         {
-            for (int y = 0; y < rows; y++)
+            for (int y = 0; y < this.rows; y++)
             {
                 Node node = new Node(new Vector2Int(x, y));
                 nodes[x, y] = node;
             }
         }
-        this.nodes = nodes;
     }
 
     public void SetStart(Vector2Int p)
@@ -92,11 +99,11 @@ public class Dijkstra
 
             curNode.visited = true;
 
-            if (curNode == end)
-            {
-                allVisited = true;
-                break;
-            }
+            //if (curNode == end)
+            //{
+            //    allVisited = true;
+            //    break;
+            //}
         }
 
         Node node = end;

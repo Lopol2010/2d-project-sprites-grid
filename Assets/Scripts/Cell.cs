@@ -112,7 +112,6 @@ public class Cell : MonoBehaviour
 
     private void OnMouseUp()
     {
-        Debug.LogError(1);
     }
 
     public void OnDropItem(Item item)
@@ -125,9 +124,14 @@ public class Cell : MonoBehaviour
     {
         if (DebugContent)
         {
-            var cellPosOnScreen = Camera.main.WorldToScreenPoint(transform.position);
+            float padding = 0.2f;
+            var cellWorldPos = transform.position;
+            cellWorldPos.x -= 0.5f - padding;
+            cellWorldPos.y += 0.5f - padding;
+            var cellPosOnScreen = Camera.main.WorldToScreenPoint(cellWorldPos);
 
             cellPosOnScreen.y = Screen.height - cellPosOnScreen.y;
+
 
             GUILayout.BeginArea(new Rect(cellPosOnScreen.x, cellPosOnScreen.y, 100, 100));
             GUILayout.Label($"{x} {y}");

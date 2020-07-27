@@ -2,11 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SvalkaEntity : Entity
+public class BuldozerEntity : Entity
 {
+
+    
     private void Awake()
     {
-        type = EntityType.svalka;
+        type = EntityType.Buldozer;
+
+        preyList.Add(EntityType.Svalka);
+
     }
 }
 
