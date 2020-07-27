@@ -22,15 +22,15 @@ public class Entity : MonoBehaviour
     //{
     //    get => currentCell.position;
     //}
-    public int x 
+    public int x
     {
         get => position.x;
-        set => position = new Vector2Int(value, position.y); 
+        set => position = new Vector2Int(value, position.y);
     }
-    public int y 
-    { 
-        get => position.y; 
-        set => position = new Vector2Int(position.x, value); 
+    public int y
+    {
+        get => position.y;
+        set => position = new Vector2Int(position.x, value);
     }
 
 
@@ -38,6 +38,7 @@ public class Entity : MonoBehaviour
     protected float moveSpeed = 4;
     protected float moveDelta;
     public bool isMoving;
+    public bool shouldMove;
     protected Entity target;
     protected Cell nextCell;
     protected Transform moveFrom;
@@ -66,37 +67,9 @@ public class Entity : MonoBehaviour
 
     void Update()
     {
-
         if (isMoving)
         {
-            if (nextCell == null)
-            {
-                isMoving = false;
-            }
-
-            transform.position = Vector3.Lerp(nextCell.transform.position, transform.position, 1 - moveDelta);
-            moveDelta += Time.deltaTime * moveSpeed;
-
-            if (moveDelta >= 1)
-            {
-
-                SetPosition(currentCell);
-
-                if (target != null && position == target.position)
-                {
-                    target = null;
-                }
-
-                var collideWith = nextCell.GetBefore(this);
-                if (collideWith)
-                {
-                    OnCollision(collideWith);
-                }
-
-                moveDelta = 0;
-                isMoving = false;
-                nextCell = null;
-            }
+            MoveTowards(nextCell);
         }
         else
         {
@@ -114,9 +87,52 @@ public class Entity : MonoBehaviour
 
             }
         }
+
     }
 
-    
+    /// <summary>
+    /// Move entity smoothly towards <paramref name="cell"/>'s world position. 
+    /// </summary>
+    /// <param name="cell">Destination cell.</param>
+    /// <returns>True when movement is done.</returns>
+    public void MoveTowards(Cell cell)
+    {
+        if (cell == null)
+        {
+            return;
+        }
+
+        moveDelta += Time.deltaTime * moveSpeed;
+        transform.position = Vector3.Lerp(nextCell.transform.position, transform.position, 1 - moveDelta);
+        if (moveDelta >= 1)
+        {
+            moveDelta = 0;
+            isMoving = false;
+            shouldMove = false;
+            SetPosition(currentCell);
+
+            OnEndMoveTowards();
+        }
+    }
+
+    private void OnEndMoveTowards()
+    {
+
+        if (target != null && position == target.position)
+        {
+            target = null;
+        }
+
+        var collideWith = nextCell.GetBefore(this);
+        if (collideWith)
+        {
+            OnCollision(collideWith);
+        }
+
+        moveDelta = 0;
+        nextCell = null;
+        shouldMove = false;
+    }
 
     public virtual void Step()
     {
@@ -138,7 +154,7 @@ public class Entity : MonoBehaviour
         nextCell = GetStepToward(targetCell);
     }
 
-    public Entity FindChaseTarget ()
+    public Entity FindChaseTarget()
     {
         Entity chaseTarget = null;
         foreach (var interestEntry in preyList)
@@ -193,6 +209,10 @@ public class Entity : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Teleport to <paramref name="cell"/>'s world position.
+    /// </summary>
+    /// <param name="cell">Destination cell.</param>
     public void SetPosition(Cell cell)
     {
         position = cell.position;
