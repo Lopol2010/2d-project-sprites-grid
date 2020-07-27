@@ -61,6 +61,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -92,7 +93,7 @@ MonoBehaviour:
   cursorStartDragPosition: {x: 0, y: 0}
   sizeOverSlot: 1.3
   sizeOverGrid: 0.7
-  type: 1
+  type: 14
   rectTransform: {fileID: 0}
   slot: {fileID: 0}
   game: {fileID: 0}
