@@ -47,18 +47,7 @@ public class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
     public void OnDrag(PointerEventData eventData)
     {
-        //var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //var hit = Physics2D.Raycast(ray.origin, ray.direction, 10, LayerMask.GetMask("cell"));
-        //if (hit)
-        //{
-        //    rectTransform.localScale = defaultSize * sizeOverGrid;
-        //}
-        //else
-        //{
-        //    rectTransform.localScale = defaultSize * sizeOverSlot;
-        //}
-        //rectTransform.anchoredPosition = eventData.position - cursorStartDragPosition;
-
+       
         Vector2 cursorPosInWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         int x = Mathf.RoundToInt(cursorPosInWorld.x);
         int y = Mathf.RoundToInt(cursorPosInWorld.y);
@@ -66,14 +55,10 @@ public class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         if (grid.Exists(x, y))
         {
             rectTransform.localScale = defaultSize * sizeOverGrid;
-            //rectTransform.anchoredPosition = bindPos - cursorStartDragPosition;
-
         }
         else
         {
             rectTransform.localScale = defaultSize * sizeOverSlot;
-            //rectTransform.anchoredPosition = eventData.position - cursorStartDragPosition;
-
         }
         rectTransform.anchoredPosition = eventData.position - cursorStartDragPosition;
 

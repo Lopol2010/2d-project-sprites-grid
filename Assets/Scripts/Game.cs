@@ -69,6 +69,22 @@ public class Game : MonoBehaviour
         }
         return null;
     }
+    public Entity GetClosestEntity(Entity entity, EntityType type)
+    {
+        Entity closest = null;
+        float minDist = Mathf.Infinity;
+        var entitiesOfType = entities.FindAll(e => e.type == type);
+        foreach (var e in entitiesOfType)
+        {
+            var dist = Vector3.Distance(entity.transform.position, e.transform.position);
+            if (minDist > dist)
+            {
+                minDist = dist;
+                closest = e;
+            }
+        }
+        return closest;
+    }
 
     public void DoStep()
     {

@@ -88,6 +88,25 @@ public class Entity : MonoBehaviour
         }
 
     }
+    public void Step()
+    {
+        if (target == null)
+        {
+            Entity chaseTarget = FindChaseTarget();
+
+            if (chaseTarget)
+            {
+                target = chaseTarget;
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        var targetCell = grid.GetCell(target.position);
+        nextCell = GetStepToward(targetCell);
+    }
 
     /// <summary>
     /// Move entity smoothly towards <paramref name="cell"/>'s world position. 
@@ -131,32 +150,14 @@ public class Entity : MonoBehaviour
         nextCell = null;
     }
 
-    public virtual void Step()
-    {
-        if (target == null)
-        {
-            Entity chaseTarget = FindChaseTarget();
 
-            if (chaseTarget)
-            {
-                target = chaseTarget;
-            }
-            else
-            {
-                return;
-            }
-        }
-
-        var targetCell = grid.GetCell(target.position);
-        nextCell = GetStepToward(targetCell);
-    }
 
     public Entity FindChaseTarget()
     {
         Entity chaseTarget = null;
         foreach (var interestEntry in preyList)
         {
-            var current = game.GetRandomEntity(interestEntry);
+            var current = game.GetClosestEntity(this, interestEntry);
             if (current != null)
             {
                 chaseTarget = current;
