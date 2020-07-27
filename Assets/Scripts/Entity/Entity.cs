@@ -17,6 +17,7 @@ public class Entity : MonoBehaviour
 
     public EntityType type;
     public Cell currentCell;
+
     public Vector2Int position;
     //{
     //    get => currentCell.position;
@@ -73,12 +74,8 @@ public class Entity : MonoBehaviour
                 isMoving = false;
             }
 
-            Vector3 dir = (transform.position - nextCell.transform.position);
-            Vector3 endOffset = dir.normalized * (1 - moveDelta);
-            transform.position = nextCell.transform.position + endOffset;
-
+            transform.position = Vector3.Lerp(nextCell.transform.position, transform.position, 1 - moveDelta);
             moveDelta += Time.deltaTime * moveSpeed;
-            moveDelta = Mathf.Clamp(moveDelta, 0, 1);
 
             if (moveDelta >= 1)
             {
@@ -106,7 +103,6 @@ public class Entity : MonoBehaviour
             if (target != null && nextCell != null)
             {
 
-
                 if (CollisionResolver.CanCollide(this, nextCell.GetLast()))
                 {
                     isMoving = true;
@@ -119,6 +115,8 @@ public class Entity : MonoBehaviour
             }
         }
     }
+
+    
 
     public virtual void Step()
     {
