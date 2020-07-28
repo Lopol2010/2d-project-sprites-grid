@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,27 +11,27 @@ public class CanvasController : MonoBehaviour
     private Image TimeOfDayImage;
 
     private int _timeOfDay;
-    public int TimeOfDay 
-    { 
+    public int TimeOfDay
+    {
         get
         {
             return _timeOfDay;
         }
-        set 
+        set
         {
             _timeOfDay = value;
             TimeOfDayImage.sprite = TimeOfDaySprites[value];
-        } 
+        }
     }
 
     void Start()
     {
-        
+
     }
 
     void Update()
     {
-        
+
     }
 
 }

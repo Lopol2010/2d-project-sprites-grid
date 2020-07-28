@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
@@ -18,12 +16,12 @@ public class CameraManager : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
     public void FitContent()
     {
-        transform.position = new Vector3((float)grid.columns / 2 + 0.5f - 1, 
+        transform.position = new Vector3((float)grid.columns / 2 + 0.5f - 1,
             (float)grid.rows / 2 + 0.5f - 1, transform.position.z);
 
         cam.orthographicSize = ((float)grid.columns / 2) / cam.aspect;

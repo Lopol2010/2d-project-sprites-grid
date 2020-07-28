@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using UnityEditorInternal;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Game : MonoBehaviour
@@ -10,7 +6,7 @@ public class Game : MonoBehaviour
 
 
     public bool DebugCellContent = false;
-    
+
     [Space]
 
     [SerializeField]
@@ -34,7 +30,7 @@ public class Game : MonoBehaviour
 
     void Start()
     {
-     
+
 
         //cameraManager = Camera.main.GetComponent<CameraManager>();
 
@@ -91,7 +87,7 @@ public class Game : MonoBehaviour
 
         canvasController.TimeOfDay = stepCount % dayNightLength;
         stepCount++;
-        
+
         if (entities.Exists(e => e.isMoving))
         {
             return;

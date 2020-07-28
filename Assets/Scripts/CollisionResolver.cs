@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 public static class CollisionResolver
 {
@@ -21,7 +17,7 @@ public static class CollisionResolver
 
         public override bool Equals(object obj)
         {
-            if(obj is Collision collision)
+            if (obj is Collision collision)
             {
                 return collision.a == a && collision.b == b;
             }
@@ -65,7 +61,7 @@ public static class CollisionResolver
 
         public override void Execute(Entity a, Entity b)
         {
-            var cell = b.currentCell; 
+            var cell = b.currentCell;
             game.Despawn(a);
             game.Despawn(b);
             game.Spawn(newType, cell);
@@ -79,7 +75,7 @@ public static class CollisionResolver
     {
 
         CollisionResult result;
-        if(CollisionRules.TryGetValue(new Collision(a.type, b.type), out result))
+        if (CollisionRules.TryGetValue(new Collision(a.type, b.type), out result))
         {
             result.Execute(a, b);
         }

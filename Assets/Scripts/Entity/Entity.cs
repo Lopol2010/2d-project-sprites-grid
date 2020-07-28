@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -85,8 +83,14 @@ public class Entity : MonoBehaviour
         }
         else
         {
-            // TODO: Add behaviour when entity finds no chase target
-            return;
+            var randCell = GetNeighborCell();
+
+            if (randCell != null)
+            {
+                nextCell = randCell;
+                AttachTo(nextCell);
+                isMoving = true;
+            }
         }
 
     }
@@ -189,5 +193,21 @@ public class Entity : MonoBehaviour
     {
         position = cell.position;
         transform.position = cell.transform.position;
+    }
+
+    /// <summary>
+    /// Find adjacent cell that can be visited by this entity
+    /// </summary>
+    public Cell GetNeighborCell()
+    {
+        var neighbours = grid.GetNeighbors(currentCell);
+        neighbours = neighbours.FindAll(e => CollisionResolver.CanCollide(this, e.GetLast()));
+
+        if (neighbours.Count > 0)
+        {
+            var randomNbor = neighbours[Random.Range(0, neighbours.Count)];
+            return randomNbor;
+        }
+        return null;
     }
 }

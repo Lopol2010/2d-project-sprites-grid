@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class DvornikEntity : Entity
+﻿public class DvornikEntity : Entity
 {
     private void Awake()
     {

@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BomzhEntity : Entity
 {
@@ -16,13 +13,11 @@ public class BomzhEntity : Entity
 
     public override void Step()
     {
-        var neighbours = grid.GetNeighbors(currentCell);
-        neighbours = neighbours.FindAll(e => CollisionResolver.CanCollide(this, e.GetLast()));
+        var randCell = GetNeighborCell();
 
-        if (neighbours.Count > 0)
+        if (randCell != null)
         {
-            var randomNbor = neighbours[Random.Range(0, neighbours.Count)];
-            nextCell = randomNbor;
+            nextCell = randCell;
             AttachTo(nextCell);
             isMoving = true;
         }

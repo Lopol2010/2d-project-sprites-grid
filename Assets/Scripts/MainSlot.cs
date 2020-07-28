@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class MainSlot : MonoBehaviour
@@ -15,11 +14,11 @@ public class MainSlot : MonoBehaviour
 
     }
 
-    
+
 
     void Update()
     {
-        
+
     }
 
     public void SetRandomItem()

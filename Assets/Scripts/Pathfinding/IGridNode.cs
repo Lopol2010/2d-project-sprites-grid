@@ -1,9 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-
-public interface IGridNode
+﻿public interface IGridNode
 {
     //public int x { get; set; }
     //public int y { get; set; }

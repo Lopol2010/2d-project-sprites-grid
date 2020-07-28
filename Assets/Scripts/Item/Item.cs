@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Experimental.Rendering;
-using UnityEngine.UIElements;
 
 public class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
@@ -47,7 +40,7 @@ public class Item : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
     public void OnDrag(PointerEventData eventData)
     {
-       
+
         Vector2 cursorPosInWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         int x = Mathf.RoundToInt(cursorPosInWorld.x);
         int y = Mathf.RoundToInt(cursorPosInWorld.y);
