@@ -20,12 +20,13 @@ public class BomzhEntity : Entity
 
     public override void Step()
     {
-        //var neighbours = grid.GetNeighbors(currentCell);
-        //if (neighbours.Count > 0)
-        //{
-        //    var randomNbor = neighbours[Random.Range(0, neighbours.Count)];
-        //    nextCell = randomNbor;
-        //    isMoving = true;
-        //}
+        var neighbours = grid.GetNeighbors(currentCell);
+        if (neighbours.Count > 0)
+        {
+            var randomNbor = neighbours[Random.Range(0, neighbours.Count)];
+            nextCell = randomNbor;
+            AttachTo(nextCell);
+            isMoving = true;
+        }
     }
 }

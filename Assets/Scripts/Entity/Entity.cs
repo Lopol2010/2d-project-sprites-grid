@@ -38,7 +38,7 @@ public class Entity : MonoBehaviour
     protected float moveSpeed = 4;
     protected float moveDelta;
     public bool isMoving;
-    protected Entity target;
+    protected Entity chaseTarget;
     protected Cell nextCell;
     protected Transform moveFrom;
 
@@ -66,35 +66,22 @@ public class Entity : MonoBehaviour
 
     void Update()
     {
-        if (isMoving)
+
+        if (nextCell != null)
         {
             MoveTowards(nextCell);
         }
-        else
-        {
-            if (target != null && nextCell != null)
-            {
-
-                if (CollisionResolver.CanCollide(this, nextCell.GetLast()))
-                {
-                    isMoving = true;
-                    currentCell.Remove(this);
-                    nextCell.Push(this);
-
-                    currentCell = nextCell;
-                }
-
-            }
-        }
-
     }
+
     public virtual void Step()
     {
-        Entity chaseTarget = FindChaseTarget();
+        chaseTarget = FindChaseTarget();
 
         if (chaseTarget)
         {
-            target = chaseTarget;
+            nextCell = GetStepToward(chaseTarget.currentCell);
+            AttachTo(nextCell);
+            isMoving = nextCell != null;
         }
         else
         {
@@ -102,8 +89,6 @@ public class Entity : MonoBehaviour
             return;
         }
 
-        var targetCell = grid.GetCell(target.position);
-        nextCell = GetStepToward(targetCell);
     }
 
     /// <summary>
@@ -113,17 +98,17 @@ public class Entity : MonoBehaviour
     /// <returns>True when movement is done.</returns>
     public void MoveTowards(Cell cell)
     {
-        if (cell == null)
-        {
-            return;
-        }
 
         moveDelta += Time.deltaTime * moveSpeed;
         transform.position = Vector3.Lerp(nextCell.transform.position, transform.position, 1 - moveDelta);
+
         if (moveDelta >= 1)
         {
-            moveDelta = 0;
+
             isMoving = false;
+            moveDelta = 0;
+            nextCell = null;
+
             SetPosition(currentCell);
 
             OnEndMoveTowards();
@@ -133,19 +118,12 @@ public class Entity : MonoBehaviour
     private void OnEndMoveTowards()
     {
 
-        if (target != null && position == target.position)
-        {
-            target = null;
-        }
-
-        var collideWith = nextCell.GetBefore(this);
+        var collideWith = currentCell.GetBefore(this);
         if (collideWith)
         {
             OnCollision(collideWith);
         }
 
-        moveDelta = 0;
-        nextCell = null;
     }
 
 
@@ -174,7 +152,7 @@ public class Entity : MonoBehaviour
             return true;
         });
 
-        var path = dijkstra.GetShortestPath(position, target.position);
+        var path = dijkstra.GetShortestPath(position, cell.position);
         if (path.Count > 0)
         {
             return grid.GetCell(path[0].position);
@@ -188,15 +166,17 @@ public class Entity : MonoBehaviour
     }
 
     /// <summary>
-    /// Attaches entity to cell.
+    /// Attach entity to new cell (and detach from old)
     /// </summary>
-    /// <param name="to">Cell to attach to.</param>
-    public void AttachTo(Cell to)
+    /// <param name="newCell">Cell to attach to.</param>
+    public void AttachTo(Cell newCell)
     {
-        if (to)
+        if (newCell)
         {
-            to.Push(this);
-            currentCell = to;
+            currentCell?.Remove(this);
+
+            newCell.Push(this);
+            currentCell = newCell;
         }
     }
 
