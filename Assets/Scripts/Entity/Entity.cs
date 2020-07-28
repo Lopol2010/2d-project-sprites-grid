@@ -88,20 +88,18 @@ public class Entity : MonoBehaviour
         }
 
     }
-    public void Step()
+    public virtual void Step()
     {
-        if (target == null)
-        {
-            Entity chaseTarget = FindChaseTarget();
+        Entity chaseTarget = FindChaseTarget();
 
-            if (chaseTarget)
-            {
-                target = chaseTarget;
-            }
-            else
-            {
-                return;
-            }
+        if (chaseTarget)
+        {
+            target = chaseTarget;
+        }
+        else
+        {
+            // TODO: Add behaviour when entity finds no chase target
+            return;
         }
 
         var targetCell = grid.GetCell(target.position);
