@@ -92,8 +92,7 @@ public static class CollisionResolver
         {
             return true;
         }
-        CollisionResult result = null;
-        return CollisionRules.TryGetValue(new Collision(a.type, b.type), out result);
+        return CollisionRules.TryGetValue(new Collision(a.type, b.type), out _);
     }
 
     public static void Init(Game _game)

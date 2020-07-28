@@ -46,6 +46,15 @@ public class Cell : MonoBehaviour
 
     }
 
+    //public Entity GetFirst()
+    //{
+    //    if (content.Count > 0)
+    //    {
+    //        return content[0];
+    //    }
+    //    return null;
+    //}
+
     public Entity GetLast()
     {
         if (content.Count > 0)
